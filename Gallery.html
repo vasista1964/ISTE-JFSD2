@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: Centre;
+            align-items: Centre;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        #gallery-container {
+            position: relative;
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .gallery-image {
+            display: none;
+            width: 50%;
+        }
+
+        #prevBtn, #nextBtn {
+            position:relative;
+            top: 30%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 10px;
+            background-color: #666;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+        }
+
+        #prevBtn {
+            left: 0px;
+        }
+
+        #nextBtn {
+            right: 0px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="gallery-container">
+    <button id="prevBtn" onclick="changeImage(-1)">&lt; Previous</button>
+    <img class="gallery-image" src="D:\SVCET\FSDISTE\Web\HTML Assignemnts\jfsd1.jpg" alt="JFSD 1">
+    <img class="gallery-image" src="D:\SVCET\FSDISTE\Web\HTML Assignemnts\js1.jpg" alt="Javascript 2">
+    <img class="gallery-image" src="D:\SVCET\FSDISTE\Web\HTML Assignemnts\html1.jpg" alt="HTML 1">
+    <button id="nextBtn" onclick="changeImage(1)">Next &gt;</button>
+</div>
+
+<script>
+    let currentImageIndex = 0;
+    const galleryImages = document.querySelectorAll('.gallery-image');
+
+    function showImage(index) {
+        galleryImages.forEach(image => image.style.display = 'none');
+        galleryImages[index].style.display = 'block';
+    }
+
+    function changeImage(n) {
+        currentImageIndex += n;
+
+        if (currentImageIndex >= galleryImages.length) {
+            currentImageIndex = 0;
+        } else if (currentImageIndex < 0) {
+            currentImageIndex = galleryImages.length - 1;
+        }
+
+        showImage(currentImageIndex);
+    }
+
+    // Show the initial image
+    showImage(currentImageIndex);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+const apiKey = 'DEMO_KEY';
+const apodUrl = `https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY`;
+const neoUrl = `https://api.nasa.gov/neo/rest/v1/feed?start_date=2015-09-07&end_date=2015-09-08&api_key=DEMO_KEY`;
+
+// Function to fetch data from a given URL
+const fetchData = async (url) => {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch data from ${url}`);
+  }
+  return response.json();
+};
+
+// Function to process the results when both promises are resolved
+const processResults = (result1, result2) => {
+  console.log('Result from APOD API:', result1);
+  console.log('Result from NEO API:', result2);
+  // Add your processing logic here
+};
+
+// Fetch data from both APIs simultaneously using Promise.all
+Promise.all([fetchData(apodUrl), fetchData(neoUrl)])
+  .then(([apodData, neoData]) => {
+    // Process the results when both promises are resolved
+    processResults(apodData, neoData);
+  })
+  .catch((error) => {
+    console.error('Error:', error.message);
+  });

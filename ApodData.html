@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>APOD Viewer</title>
+</head>
+<body>
+  <div id="apod-container"></div>
+  <script>
+    // Function to fetch data from the APOD API
+    function fetchAPODData() {
+      // Replace 'YOUR_API_KEY' with your actual NASA API key if required
+      const apiKey = 'DEMO_KEY';
+      const apiUrl = `https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY`;
+
+      // Fetch data from the API
+      fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+          // Display the fetched data
+          displayAPODData(data);
+        })
+        .catch(error => {
+          console.error('Error fetching APOD data:', error);
+        });
+    }
+
+    // Function to display the APOD data in the HTML
+    function displayAPODData(data) {
+      const apodContainer = document.getElementById('apod-container');
+
+      // Create HTML elements to display the APOD information
+      const titleElement = document.createElement('h2');
+      titleElement.textContent = data.title;
+
+      const dateElement = document.createElement('p');
+      dateElement.textContent = `Date: ${data.date}`;
+
+      const explanationElement = document.createElement('p');
+      explanationElement.textContent = data.explanation;
+
+      const imageElement = document.createElement('img');
+      imageElement.src = data.url;
+      imageElement.alt = data.title;
+
+      // Append elements to the container
+      apodContainer.appendChild(titleElement);
+      apodContainer.appendChild(dateElement);
+      apodContainer.appendChild(explanationElement);
+      apodContainer.appendChild(imageElement);
+    }
+
+    // Call the fetchAPODData function when the page loads
+    document.addEventListener('DOMContentLoaded', fetchAPODData);
+  </script>
+</body>
+</html>

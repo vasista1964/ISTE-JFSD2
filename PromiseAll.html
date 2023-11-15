@@ -1,0 +1,49 @@
+// Function to fetch data from an API
+const fetchData = (url) => {
+  return fetch(url)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Network response was not ok: ${response.statusText}`);
+      }
+      return response.json();
+    })
+    .catch(error => {
+      console.error('Error fetching data:', error);
+      throw error; // Propagate the error further
+    });
+};
+
+// URLs for the two APIs
+const api1Url = 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY';
+const api2Url = 'https://api.nasa.gov/neo/rest/v1/feed?start_date=2015-09-07&end_date=2015-09-08&api_key=DEMO_KEY';
+
+// Function to fetch data from both APIs simultaneously using Promise.all
+const fetchDataFromBothAPIs = () => {
+  // Use Promise.all to fetch data from both APIs simultaneously
+  return Promise.all([fetchData(api1Url), fetchData(api2Url)])
+    .then(([api1Data, api2Data]) => {
+      // Process the results when both promises are resolved
+      console.log('Data from API 1:', api1Data);
+      console.log('Data from API 2:', api2Data);
+
+      // Add your processing logic here
+
+      // Return the processed data or do something else
+      return { api1Data, api2Data };
+    })
+    .catch(error => {
+      // Handle errors from any of the promises
+      console.error('Error fetching data from both APIs:', error);
+    });
+};
+
+// Example usage
+fetchDataFromBothAPIs()
+  .then(processedData => {
+    // Do something with the processed data
+    console.log('Processed Data:', processedData);
+  })
+  .catch(error => {
+    // Handle any errors that may occur during the process
+    console.error('Error in the main process:', error);
+  });
