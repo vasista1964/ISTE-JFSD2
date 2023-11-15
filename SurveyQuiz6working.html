@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Time!</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #quiz-container {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .option {
+            margin-bottom: 10px;
+        }
+
+        #prevBtn, #nextBtn {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #prevBtn {
+            background-color: #2196F3;
+        }
+
+        #submitBtn {
+            background-color: #f44336;
+        }
+
+        #result {
+            margin-top: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div id="quiz-container">
+    <h1>Quiz Time</h1>
+    <form id="quizForm">
+        <div class="question" id="question1">
+            <p>1. What is the capital of France?</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q1" value="Paris"> Paris</label>
+                <label class="option"><input type="radio" name="q1" value="Berlin"> Berlin</label>
+                <label class="option"><input type="radio" name="q1" value="Madrid"> Madrid</label>
+            </div>
+        </div>
+
+        <div class="question" id="question2">
+            <p>2. What is the largest mammal?</p>
+            <div class="options">
+                <label class="option"><input type="radio" name="q2" value="Elephant"> Elephant</label>
+                <label class="option"><input type="radio" name="q2" value="Blue Whale"> Blue Whale</label>
+                <label class="option"><input type="radio" name="q2" value="Giraffe"> Giraffe</label>
+            </div>
+        </div>
+
+        <!-- Add more questions as needed -->
+
+        <div id="result"></div>
+
+        <button type="button" id="prevBtn" onclick="changeQuestion(-1)">Previous</button>
+        <button type="button" id="nextBtn" onclick="changeQuestion(1)">Next</button>
+        <button type="button" id="submitBtn" onclick="submitQuiz()">Submit</button>
+    </form>
+</div>
+
+<script>
+    let currentQuestion = 1;
+    let totalQuestions = document.querySelectorAll('.question').length;
+
+    function changeQuestion(n) {
+        currentQuestion += n;
+
+        if (currentQuestion < 1) {
+            currentQuestion = 1;
+        } else if (currentQuestion > totalQuestions) {
+            currentQuestion = totalQuestions;
+        }
+
+        updateQuestions();
+    }
+
+    function updateQuestions() {
+        document.querySelectorAll('.question').forEach(question => {
+            question.style.display = 'none';
+        });
+
+        document.getElementById(`question${currentQuestion}`).style.display = 'block';
+    }
+
+    function submitQuiz() {
+        let score = 0;
+
+        for (let i = 1; i <= totalQuestions; i++) {
+            const selectedOption = document.querySelector(`input[name="q${i}"]:checked`);
+
+            if (selectedOption) {
+                // Update scoring logic based on correct answers
+                if (selectedOption.value === 'Paris' && i === 1) {
+                    score++;
+                } else if (selectedOption.value === 'Blue Whale' && i === 2) {
+                    score++;
+                }
+                // Add more scoring logic for additional questions
+            }
+        }
+
+        document.getElementById('result').innerHTML = `Your score: ${score}/${totalQuestions}`;
+    }
+
+    updateQuestions();
+</script>
+
+</body>
+</html>

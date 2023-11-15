@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Survey Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    #survey-container {
+      width: 60%;
+      margin: 50px auto;
+      background-color: #fff;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+
+    .question {
+      margin-bottom: 20px;
+    }
+
+    .options {
+      margin-top: 10px;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="survey-container">
+    <form id="survey-form">
+    <h1>Survey Quiz</h1>
+      <div class="question">
+        <label for="q1">Question 1: What is your favorite color?</label>
+        <div class="options">
+          <input type="radio" name="q1" value="Red"> Red
+          <input type="radio" name="q1" value="Blue"> Blue
+          <input type="radio" name="q1" value="Green"> Green
+        </div>
+      </div>
+
+      <div class="question hidden ">
+        <label for="q2">Question 2: What is your favorite animal?</label>
+        <div class="options">
+          <input type="radio" name="q2" value="Dog"> Dog
+          <input type="radio" name="q2" value="Cat"> Cat
+          <input type="radio" name="q2" value="Bird"> Bird
+        </div>
+      </div>
+
+      <!-- Add more questions as needed -->
+
+      <button type="button" onclick="prevQuestion()" id="prevBtn" class="hidden">Previous</button>
+      <button type="button" onclick="nextQuestion()">Next</button>
+      <button type="submit" class="hidden" id="submitBtn">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    var currentQuestion = 0;
+    var questions = document.querySelectorAll('.question');
+    var prevBtn = document.getElementById('prevBtn');
+    var submitBtn = document.getElementById('submitBtn');
+
+    function showQuestion(index) {
+      questions[currentQuestion].classList.add('hidden');
+      questions[index].classList.remove('hidden');
+      currentQuestion = index;
+
+      if (currentQuestion === 0) {
+        prevBtn.classList.add('hidden');
+      } else {
+        prevBtn.classList.remove('hidden');
+      }
+
+      if (currentQuestion === questions.length - 1) {
+        submitBtn.classList.remove('hidden');
+      } else {
+        submitBtn.classList.add('hidden');
+      }
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < questions.length - 1) {
+        showQuestion(currentQuestion + 1);
+      }
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        showQuestion(currentQuestion - 1);
+      }
+    }
+
+    document.getElementById('survey-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      // Handle form submission logic here
+      alert('Survey submitted!');
+    });
+
+    showQuestion(currentQuestion);
+  </script>
+</body>
+</html>

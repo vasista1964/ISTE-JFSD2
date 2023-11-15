@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interactive Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    .quiz-container {
+      max-width: 600px;
+      margin: 20px auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    .question {
+      display: none;
+    }
+    .question.active {
+      display: block;
+    }
+    .choices label {
+      display: block;
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      margin-top: 10px;
+      border: none;
+      background-color: #3498db;
+      color: #fff;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <h1>Interactive Quiz</h1>
+    <div class="question active" id="question1">
+      <h2>Question 1: What is the capital of France?</h2>
+      <div class="choices">
+        <label><input type="radio" name="q1" value="paris"> Paris</label>
+        <label><input type="radio" name="q1" value="london"> London</label>
+        <label><input type="radio" name="q1" value="berlin"> Berlin</label>
+      </div>
+    </div>
+
+    <div class="question" id="question2">
+      <h2>Question 2: What is the largest planet in our solar system?</h2>
+      <div class="choices">
+        <label><input type="radio" name="q2" value="jupiter"> Jupiter</label>
+        <label><input type="radio" name="q2" value="saturn"> Saturn</label>
+        <label><input type="radio" name="q2" value="neptune"> Neptune</label>
+      </div>
+    </div>
+
+    <div class="question" id="question3">
+      <h2>Question 3: What is the powerhouse of the cell?</h2>
+      <div class="choices">
+        <label><input type="radio" name="q3" value="nucleus"> Nucleus</label>
+        <label><input type="radio" name="q3" value="mitochondria"> Mitochondria</label>
+        <label><input type="radio" name="q3" value="ribosome"> Ribosome</label>
+      </div>
+    </div>
+
+    <div class="question" id="question4">
+      <h2>Question 4: What is the closest planet to the sun?</h2>
+      <div class="choices">
+        <label><input type="radio" name="q4" value="mercury"> Mercury</label>
+        <label><input type="radio" name="q4" value="venus"> Venus</label>
+        <label><input type="radio" name="q4" value="earth"> Earth</label>
+      </div>
+    </div>
+
+    <button onclick="prevQuestion()">Previous</button>
+    <button onclick="nextQuestion()">Next</button>
+    <button onclick="submitQuiz()">Submit</button>
+    <p id="result"></p>
+  </div>
+
+  <script>
+    let currentQuestion = 0;
+    const questions = document.querySelectorAll('.question');
+
+    function showQuestion(index) {
+      for (let i = 0; i < questions.length; i++) {
+        questions[i].classList.remove('active');
+      }
+      questions[index].classList.add('active');
+      currentQuestion = index;
+    }
+
+    function prevQuestion() {
+      if (currentQuestion > 0) {
+        showQuestion(currentQuestion - 1);
+      }
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < questions.length - 1) {
+        showQuestion(currentQuestion + 1);
+      }
+    }
+
+    function submitQuiz() {
+      let score = 0;
+      const answers = ['paris', 'jupiter', 'mitochondria', 'mercury'];
+
+      for (let i = 0; i < questions.length; i++) {
+        const selectedAnswer = document.querySelector(`input[name="q${i + 1}"]:checked`);
+        if (selectedAnswer) {
+          if (selectedAnswer.value === answers[i]) {
+            score++;
+          }
+        }
+      }
+
+      document.getElementById('result').innerText = `Your score is: ${score}/${questions.length}`;
+    }
+  </script>
+</body>
+</html>

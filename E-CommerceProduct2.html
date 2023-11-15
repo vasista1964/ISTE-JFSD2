@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <title>Mobile Products</title>
+  <style>
+    /* Basic CSS for styling */
+
+    body {
+      font-family: Cambria, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .product {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .product img {
+      width: 5%;
+      height: auto;
+    }
+
+    .product-details {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .reviews {
+      margin-top: 30px;
+    }
+
+    .rating {
+      display: flex;
+      align-items: center;
+    }
+
+    .rating span {
+      margin-right: 5px;
+    }
+<title>Mobile Products</title>
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="product">
+    <h1 class="Mobile Products">Mobiles Products</h1>
+      <div class="product-images">
+        <img src="D:\SVCET\FSDISTE\web page development\pictures\applemobile.jpg" alt="Apple Mobile">
+        <img src="D:\SVCET\FSDISTE\web page development\pictures\samsungmobile.jpg" alt="Samsung Mobile">
+        <!-- Add more images as needed -->
+      </div>
+      <div class="product-details">
+        <h2>Apple Mobile</h2>
+        <p>Description of the product.</p>
+        <p>Price: $1000.99</p>
+        <div class="rating">
+          <span>Rating:</span>
+          <span id="averageRating">--</span>
+        </div>
+	<div class="product-details">
+        <h2>Samsung Mobile</h2>
+        <p>Description of the product.</p>
+        <p>Price: $899.99</p>
+        <div class="rating">
+          <span>Rating:</span>
+          <span id="averageRating">--</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="reviews">
+      <h2>Customer Reviews</h2>
+      <div id="reviewsList">
+        <!-- Reviews will be added dynamically using JavaScript -->
+      </div>
+      <h3>Add Your Review</h3>
+      <form id="reviewForm">
+        <input type="text" id="vasista" placeholder="Vasista" required>
+        <textarea id="userReview" placeholder="Your Review" required></textarea>
+        <input type="number" id="userRating" placeholder="Your Rating (1-5)" min="1" max="5" required>
+        <button type="submit">Submit Review</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // JavaScript for the rating system and reviews
+
+    // Sample reviews array
+    let reviews = [
+      { name: "vasista", review: "Great product!", rating: 5 },
+      { name: "gopi", review: "Good quality.", rating: 4 },
+      // Add more reviews here
+    ];
+
+    // Function to display reviews
+    function displayReviews() {
+      const reviewsList = document.getElementById("reviewsList");
+      reviewsList.innerHTML = "";
+      reviews.forEach(review => {
+        const reviewItem = document.createElement("div");
+        reviewItem.innerHTML = `
+          <p><strong>${review.name}</strong> - ${review.review}</p>
+          <p>Rating: ${review.rating}</p>
+          <hr>
+        `;
+        reviewsList.appendChild(reviewItem);
+      });
+    }
+
+    // Function to calculate average rating
+    function calculateAverageRating() {
+      let totalRating = 0;
+      reviews.forEach(review => {
+        totalRating += review.rating;
+      });
+      const averageRating = totalRating / reviews.length;
+      document.getElementById("averageRating").innerText = averageRating.toFixed(1);
+    }
+
+    // Event listener for submitting reviews
+    document.getElementById("reviewForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+      const userName = document.getElementById("userName").value;
+      const userReview = document.getElementById("userReview").value;
+      const userRating = parseInt(document.getElementById("userRating").value);
+
+      if (userName && userReview && userRating) {
+        reviews.push({ name: userName, review: userReview, rating: userRating });
+        displayReviews();
+        calculateAverageRating();
+        // Clear the form fields after submission
+        document.getElementById("userName").value = "";
+        document.getElementById("userReview").value = "";
+        document.getElementById("userRating").value = "";
+      } else {
+        alert("Please fill in all fields.");
+      }
+    });
+
+    // Initial display of reviews and average rating
+    displayReviews();
+    calculateAverageRating();
+  </script>
+</body>
+</html>

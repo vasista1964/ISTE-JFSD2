@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather Forecast</title>
+    <style>
+        /* CSS Styles */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .container {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+        input {
+            padding: 8px;
+            margin-right: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 8px 20px;
+            border-radius: 5px;
+            border: none;
+            background-color: #3498db;
+            color: #fff;
+            cursor: pointer;
+        }
+        .weather-details {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Weather Forecast</h1>
+        <input type="text" id="locationInput" placeholder="Enter location">
+        <button onclick="getWeather()">Get Weather</button>
+        <div class="weather-details" id="weatherDetails">
+            <!-- Weather details will appear here -->
+        </div>
+    </div>
+
+    <script>
+        // JavaScript
+        function getWeather() {
+            const apiKey = 'YOUR_API_KEY'; // Replace with your actual API key
+            const location = document.getElementById('locationInput').value;
+            const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${location}`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    displayWeather(data);
+                })
+                .catch(error => {
+                    console.log('Error fetching data:', error);
+                });
+        }
+
+        function displayWeather(data) {
+            const weatherDetails = document.getElementById('weatherDetails');
+            weatherDetails.innerHTML = `
+                <h2>${data.location.name}, ${data.location.country}</h2>
+                <p>Current Temperature: ${data.current.temp_c}°C</p>
+                <p>Condition: ${data.current.condition.text}</p>
+                <img src="https:${data.current.condition.icon}" alt="${data.current.condition.text}">
+            `;
+        }
+    </script>
+</body>
+</html>
